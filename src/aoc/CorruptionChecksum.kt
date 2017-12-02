@@ -1,10 +1,11 @@
-package day2
+// http://adventofcode.com/2017/day/2
+
+package aoc
 
 val VALUE_DELIMETER = "\t"
 
 fun main(args: Array<String>) {
-    val seq = ClassLoader.getSystemClassLoader().getResource("input2").readText().trim()
-    val lines = seq.split(System.getProperty("line.separator"))
+    val lines = read("input2").split(System.getProperty("line.separator"))
     println(part1(lines))
     println(part2(lines))
 }
