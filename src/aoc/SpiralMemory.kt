@@ -3,6 +3,7 @@
 package aoc
 
 import aoc.Direction.*
+import java.lang.Math.abs
 import kotlin.test.assertEquals
 
 enum class Direction { EAST, NORTH, WEST, SOUTH }
@@ -15,24 +16,22 @@ fun main(args: Array<String>) {
     println("First larger value: ${getNextValue(spiralMemory, input)}") // Part2
 }
 
-private fun getNextValue(circular: List<Pair<Int, Int>>, target: Int): Int? {
-    val values = arrayListOf(1)
+private fun getNextValue(circular: List<Pair<Int, Int>>, target: Int): Int {
     val neighbors = -1..1
-    for (pair in circular.drop(1)) {
-        var sum = 0
-        for (row in neighbors) {
-            for (col in neighbors) {
-                sum += values.getOrElse(circular.indexOf(Pair(pair.first + col, pair.second + row))) { 0 }
-            }
-        }
-        if (sum > target) return sum else values.add(sum)
+    val values = arrayListOf(1)
+    circular.drop(1).takeWhile { pair ->
+        val sum = neighbors.flatMap { r -> neighbors.map { c ->
+            values.getOrElse(circular.indexOf(Pair(pair.first + c, pair.second + r))) { 0 }}
+        }.sum()
+        values.add(sum)
+        sum < target
     }
-    return null
+    return values.last()
 }
 
 private fun calcManhattanDistance(circular: List<Pair<Int, Int>>, target: Int): Int {
     val coordinates = circular[target - 1]
-    return Math.abs(coordinates.first) + Math.abs(coordinates.second)
+    return abs(coordinates.first) + abs(coordinates.second)
 }
 
 private fun generateSpiralMemory(input: Int): List<Pair<Int, Int>> {
