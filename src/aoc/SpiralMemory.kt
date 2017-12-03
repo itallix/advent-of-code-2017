@@ -12,17 +12,16 @@ fun main(args: Array<String>) {
     val spiralMemory = generateSpiralMemory(input)
     tests1(spiralMemory)
     println("Number of steps: ${calcManhattanDistance(spiralMemory, input)}") // Part1
-
-    val nextValue = getNextValue(spiralMemory, input)
-    println("First larger value: $nextValue") // Part2
+    println("First larger value: ${getNextValue(spiralMemory, input)}") // Part2
 }
 
 private fun getNextValue(circular: List<Pair<Int, Int>>, target: Int): Int? {
     val values = arrayListOf(1)
-    for (pair in circular.subList(1, circular.size - 1)) {
+    val neighbors = -1..1
+    for (pair in circular.drop(1)) {
         var sum = 0
-        for (row in -1..1) {
-            for (col in -1..1) {
+        for (row in neighbors) {
+            for (col in neighbors) {
                 sum += values.getOrElse(circular.indexOf(Pair(pair.first + col, pair.second + row))) { 0 }
             }
         }
@@ -39,9 +38,9 @@ private fun calcManhattanDistance(circular: List<Pair<Int, Int>>, target: Int): 
 private fun generateSpiralMemory(input: Int): List<Pair<Int, Int>> {
     var dir = EAST
     var i = 1
-    var iterations = 0
-    var deep = 1
-    var isFirstIteration = false
+    var iteration = 0
+    var length = 1
+    var isFirstIterationInDirection = false
 
     val pairs = arrayListOf(Pair(0, 0))
 
@@ -57,18 +56,16 @@ private fun generateSpiralMemory(input: Int): List<Pair<Int, Int>> {
             SOUTH -> Pair(x, y - 1)
         })
 
-        iterations++
+        iteration++
         i++
 
-        if (iterations == deep) {
-            isFirstIteration = if (isFirstIteration) {
-                deep++
+        if (iteration == length) {
+            isFirstIterationInDirection = if (isFirstIterationInDirection) {
+                length++
                 false
-            } else {
-                true
-            }
-            dir = Direction.values()[(dir.ordinal + 1) % 4]
-            iterations = 0
+            } else true
+            dir = Direction.values()[(dir.ordinal + 1) % Direction.values().size]
+            iteration = 0
         }
     }
     return pairs
