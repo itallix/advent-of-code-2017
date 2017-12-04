@@ -2,26 +2,25 @@
 
 package aoc
 
-import aoc.Direction.*
 import java.lang.Math.abs
 import kotlin.test.assertEquals
-
-enum class Direction { EAST, NORTH, WEST, SOUTH }
 
 fun main(args: Array<String>) {
     val input = 289326
     val spiralMemory = generateSpiralMemory(input)
     tests1(spiralMemory)
     println("Number of steps: ${calcManhattanDistance(spiralMemory, input)}") // Part1
-    println("First larger value: ${getNextValue(spiralMemory, input)}") // Part2
+    println("First larger value: ${calcFirstLargerValue(spiralMemory, input)}") // Part2
 }
 
-private fun getNextValue(circular: List<Pair<Int, Int>>, target: Int): Int {
+private fun calcFirstLargerValue(circular: List<Pair<Int, Int>>, target: Int): Int {
     val neighbors = -1..1
     val values = arrayListOf(1)
-    circular.drop(1).takeWhile { pair ->
-        val sum = neighbors.flatMap { r -> neighbors.map { c ->
-            values.getOrElse(circular.indexOf(Pair(pair.first + c, pair.second + r))) { 0 }}
+    circular.drop(1).takeWhile { (x, y) ->
+        val sum = neighbors.flatMap { r ->
+            neighbors.map { c ->
+                values.getOrElse(circular.indexOf(Pair(x + c, y + r))) { 0 }
+            }
         }.sum()
         values.add(sum)
         sum < target
@@ -30,49 +29,32 @@ private fun getNextValue(circular: List<Pair<Int, Int>>, target: Int): Int {
 }
 
 private fun calcManhattanDistance(circular: List<Pair<Int, Int>>, target: Int): Int {
-    val coordinates = circular[target - 1]
-    return abs(coordinates.first) + abs(coordinates.second)
+    val (x, y) = circular[target - 1]
+    return abs(x) + abs(y)
 }
 
-private fun generateSpiralMemory(input: Int): List<Pair<Int, Int>> {
-    var dir = EAST
-    var i = 1
-    var iteration = 0
-    var length = 1
-    var isFirstIterationInDirection = false
+private fun generateSpiralMemory(target: Int): List<Pair<Int, Int>> {
+    val directions = listOf(Pair(1, 0), Pair(0, 1), Pair(-1, 0), Pair(0, -1))
+    val points = mutableListOf(Pair(0, 0))
+    var offset = 0
+    var steps = 1
 
-    val pairs = arrayListOf(Pair(0, 0))
-
-    while (i < input) {
-
-        val last = pairs.last()
-        val x = last.first
-        val y = last.second
-        pairs.add(when (dir) {
-            EAST -> Pair(x + 1, y)
-            NORTH -> Pair(x, y + 1)
-            WEST -> Pair(x - 1, y)
-            SOUTH -> Pair(x, y - 1)
-        })
-
-        iteration++
-        i++
-
-        if (iteration == length) {
-            isFirstIterationInDirection = if (isFirstIterationInDirection) {
-                length++
-                false
-            } else true
-            dir = Direction.values()[(dir.ordinal + 1) % Direction.values().size]
-            iteration = 0
+    while (points.size < target) {
+        (0..1).forEach { // spiral turn by 2 sides with the same amount of steps
+            (0 until steps).forEach {
+                val (x, y) = points.last()
+                val (dx, dy) = directions[offset]
+                points.add(Pair(x + dx, y + dy))
+            }
+            offset = (offset + 1) % 4
         }
+        steps++
     }
-    return pairs
+    return points
 }
 
 private fun tests1(spiralMemory: List<Pair<Int, Int>>) {
-    assertEquals(calcManhattanDistance(spiralMemory, 1), 0)
-    assertEquals(calcManhattanDistance(spiralMemory, 12), 3)
-    assertEquals(calcManhattanDistance(spiralMemory, 23), 2)
-    assertEquals(calcManhattanDistance(spiralMemory, 1024), 31)
+    listOf(Pair(1, 0), Pair(12, 3), Pair(23, 2), Pair(1024, 31)).forEach {
+        (t, a) -> assertEquals(calcManhattanDistance(spiralMemory, t), a)
+    }
 }
