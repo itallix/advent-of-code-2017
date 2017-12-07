@@ -1,7 +1,6 @@
 package aoc
 
-fun main(args: Array<String>) {
-    val bank = read("input_test").split("\t").map { it.toInt() }.toList()
+fun calcBankSteps(bank: List<Int>): Pair<Int, Int> {
     val banks = arrayListOf<List<Int>>()
     val next = bank.toMutableList()
     var steps = 0
@@ -15,6 +14,5 @@ fun main(args: Array<String>) {
         }
         steps++
     }
-    println(steps) // part 1
-    println(steps - banks.indexOfLast { it == next }) // part 2
+    return Pair(steps, steps - banks.indexOfLast { it == next })
 }

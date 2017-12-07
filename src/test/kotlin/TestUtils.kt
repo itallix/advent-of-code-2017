@@ -1,0 +1,1 @@
+fun read(name: String): String = ClassLoader.getSystemClassLoader().getResource(name).readText().trim()
