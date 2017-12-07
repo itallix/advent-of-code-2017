@@ -4,9 +4,9 @@ import aoc.findRoot
 import io.kotlintest.matchers.shouldBe
 import io.kotlintest.specs.FeatureSpec
 
-class SolutionTest : FeatureSpec() {
+class RecursiveCircusTest : FeatureSpec() {
     init {
-        feature("Day 7") {
+        feature("Day 7: Recursive Circus") {
 
             fun parse(input: String): List<Tower> {
                 val towers = arrayListOf<Tower>()
