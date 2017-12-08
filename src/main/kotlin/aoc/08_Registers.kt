@@ -1,35 +1,36 @@
 package aoc
 
 interface Expr
-class Condition(val name: String, val cnd: String, val operand: Int) : Expr
+data class Condition(val name: String, val cnd: String, val operand: Int) : Expr
 class Instruction(val reg: String, val op: String, val step: Int, val condition: Condition) : Expr
 
 fun process(instructions: List<Instruction>): Pair<Int, Int> {
     val registers = hashMapOf<String, Int>()
-    val history = arrayListOf<Int>()
+    var historicalMax = 0
     instructions.forEach { i ->
-        val condition = i.condition
-        val value = registers[condition.name] ?: 0
-        val calc = when (condition.cnd) {
-            ">" -> value > condition.operand
-            ">=" -> value >= condition.operand
-            "==" -> value == condition.operand
-            "<" -> value < condition.operand
-            "<=" -> value <= condition.operand
-            "!=" -> value != condition.operand
+        val (name, condition, operand) = i.condition
+        val value = registers[name] ?: 0
+        val calc = when (condition) {
+            ">" -> value > operand
+            ">=" -> value >= operand
+            "==" -> value == operand
+            "<" -> value < operand
+            "<=" -> value <= operand
+            "!=" -> value != operand
             else -> false
         }
         if (calc) {
             val cur = registers[i.reg] ?: 0
-            registers[i.reg] = when (i.op) {
+            val newValue = when (i.op) {
                 "inc" -> cur + i.step
                 "dec" -> cur - i.step
                 else -> 0
             }
-            if (registers[i.reg]!! > 0) {
-                history.add(registers[i.reg]!!)
+            registers[i.reg] = newValue
+            if (newValue > historicalMax) {
+                historicalMax = newValue
             }
         }
     }
-    return Pair(registers.values.max()?:0, history.max()?:0)
+    return Pair(registers.values.max()?:0, historicalMax)
 }
