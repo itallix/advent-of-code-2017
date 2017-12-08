@@ -10,4 +10,5 @@ Solutions in Kotlin for Advent of Code 2017
 * [Day 5: A Maze of Twisty Trampolines, All Alike](http://adventofcode.com/2017/day/5)
 * [Day 6: Memory Reallocation](http://adventofcode.com/2017/day/6)
 * [Day 7: Recursive Circus](http://adventofcode.com/2017/day/7)
+* [Day 8: I Heard You Like Registers](http://adventofcode.com/2017/day/8)
 
