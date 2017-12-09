@@ -5,8 +5,8 @@ import kotlin.collections.ArrayList
 
 class Stream(input: String) {
 
-    private val scores: ArrayList<Int>
-    private val characters:  ArrayList<Char>
+    private val scores: ArrayList<Int> = ArrayList()
+    private val characters: ArrayList<Char> = ArrayList()
 
     fun sum() = scores.sum()
 
@@ -14,36 +14,19 @@ class Stream(input: String) {
 
     init {
         val stack = Stack<Char>()
-        this.scores = ArrayList()
         var score = 0
-        this.characters = ArrayList()
         input.forEach { symbol ->
             if (stack.isEmpty()) {
                 stack.push(symbol)
                 if (symbol == '{') score++
             } else {
-                if (stack.peek() == '<' && symbol != '>') characters.add(symbol)
-                if (stack.peek() != '!') {
+                val cur = stack.peek()
+                if (cur == '<' && symbol != '>') characters.add(symbol)
+                if (cur != '!') {
                     when (symbol) {
-                        '{' -> {
-                            if (stack.peek() != '<') {
-                                stack.push(symbol)
-                                score++
-                            }
-                        }
-                        '}' -> {
-                            if (stack.peek() != '<') {
-                                val ss = stack.pop()
-                                if (ss == '{') {
-                                    scores.add(score--)
-                                }
-                            }
-                        }
-                        '<' -> {
-                            if (stack.peek() != '<') {
-                                stack.push(symbol)
-                            }
-                        }
+                        '{' -> if (cur != '<') { stack.push(symbol); score++ }
+                        '}' -> if (cur != '<' && stack.pop() == '{') scores.add(score--)
+                        '<' -> if (cur != '<') stack.push(symbol)
                         '>' -> stack.pop()
                         '!' -> stack.push(symbol)
                     }
