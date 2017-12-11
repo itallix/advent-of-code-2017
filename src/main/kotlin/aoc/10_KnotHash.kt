@@ -4,10 +4,7 @@ fun MutableList<Int>.reverse(length: Int, current: Int): List<Int> {
     val tmp = arrayListOf<Int>()
     var curLength = length
     var i = current % this.size
-    while (curLength > 0) {
-        tmp.add(this[i++ % this.size])
-        curLength--
-    }
+    while (curLength-- > 0) { tmp.add(this[i++ % this.size]) }
     var j = current % this.size
     tmp.reversed().forEach { this[j++ % this.size] = it }
     return this
