@@ -13,4 +13,6 @@ Solutions in Kotlin for Advent of Code 2017
 * [Day 8: I Heard You Like Registers](http://adventofcode.com/2017/day/8)
 * [Day 9: Stream Processing](http://adventofcode.com/2017/day/9)
 * [Day 10: Knot Hash](http://adventofcode.com/2017/day/10)
+* [Day 11: Hex Ed](http://adventofcode.com/2017/day/11)
+* [Day 12: Digital Plumber](http://adventofcode.com/2017/day/12)
 

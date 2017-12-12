@@ -17,7 +17,7 @@ class HexEd(var distance: Int = 0, var max: Int = 0) {
                 else -> { }
             }
             distance = listOf(Math.abs(x), Math.abs(y), Math.abs(0 - x - y)).max()!!
-            max = Math.max(max, distance)
+            max = max.coerceAtLeast(distance)
         }
     }
 }
