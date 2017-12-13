@@ -15,4 +15,5 @@ Solutions in Kotlin for Advent of Code 2017
 * [Day 10: Knot Hash](http://adventofcode.com/2017/day/10)
 * [Day 11: Hex Ed](http://adventofcode.com/2017/day/11)
 * [Day 12: Digital Plumber](http://adventofcode.com/2017/day/12)
+* [Day 13: Packet Scanners](http://adventofcode.com/2017/day/13)
 

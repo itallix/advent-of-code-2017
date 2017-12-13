@@ -6,7 +6,7 @@ import graphs.toGraph
 import io.kotlintest.matchers.shouldBe
 import io.kotlintest.specs.FeatureSpec
 
-class SolutionTest : FeatureSpec() {
+class DigitalPlumberTest : FeatureSpec() {
 
     init {
         feature("Day 12: Digital Plumber") {
