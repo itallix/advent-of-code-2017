@@ -19,4 +19,5 @@ Solutions in Kotlin for Advent of Code 2017
 * [Day 14: Disk Defragmentation](http://adventofcode.com/2017/day/14)
 * [Day 15: Dueling Generators](http://adventofcode.com/2017/day/15)
 * [Day 16: Permutation Promenade](http://adventofcode.com/2017/day/16)
+* [Day 16: Spinlock](http://adventofcode.com/2017/day/17)
 
