@@ -29,9 +29,8 @@ class Knot(val input: String) {
         var skipSize = 0
         (1..64).forEach { lengths.forEach { source.reverse(it, current); current += it + skipSize++ } }
 
-        val dense = source.chunked(16).map { it.reduce { a, b -> a xor b } }
-        return dense.joinToString("") {
-            val hex = Integer.toHexString(it); if (hex.length == 1) "0$hex" else hex
-        }
+        return source.chunked(16)
+                .map { it.reduce { a, b -> a xor b } }
+                .joinToString("") { Integer.toHexString(it).padStart(2, '0') }
     }
 }
