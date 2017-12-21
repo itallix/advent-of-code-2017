@@ -29,25 +29,19 @@ class DuetTest : FeatureSpec() {
                 var lastSound = 0L
                 var i = 0
 
-                l@ while (true) {
-                    val it = instructions[i]
+                while (true) {
+                    val it = instructions[i++]
                     when (it.inst) {
                         "set" -> state.put(it.op1, valueOf(it.op2))
                         "snd" -> lastSound = valueOf(it.op1)
                         "add" -> state.put(it.op1, valueOf(it.op1) + valueOf(it.op2))
                         "mul" -> state.put(it.op1, valueOf(it.op1) * valueOf(it.op2))
                         "mod" -> state.put(it.op1, valueOf(it.op1) % valueOf(it.op2))
-                        "rcv" -> if (valueOf(it.op1) > 0) {
-                            return lastSound
-                        }
-                        "jgz" -> {
-                            if (valueOf(it.op1) > 0) {
-                                i += valueOf(it.op2).toInt()
-                                continue@l
-                            }
+                        "rcv" -> if (valueOf(it.op1) > 0) return lastSound
+                        "jgz" -> if (valueOf(it.op1) > 0) {
+                            i += valueOf(it.op2).toInt() - 1
                         }
                     }
-                    i++
                 }
             }
 
@@ -97,7 +91,9 @@ class DuetTest : FeatureSpec() {
                                 cur += valueOf(op2).toInt() - 1
                             }
                             "rcv" -> {
-                                if (waitingQueue.size == 0) { return -1 }
+                                if (waitingQueue.size == 0) {
+                                    return -1
+                                }
                                 state.put(op1, waitingQueue.removeAt(0))
                             }
                         }
@@ -114,10 +110,14 @@ class DuetTest : FeatureSpec() {
                 var p2 = 1L
 
                 while (true) {
-                    if (p1 != 0L) { p1 = prog1.execute() }
+                    if (p1 != 0L) {
+                        p1 = prog1.execute()
+                    }
                     prog2.waitingQueue.addAll(prog1.sendingQueue)
                     prog1.sendingQueue.clear()
-                    if (p2 != 0L) { p2 = prog2.execute() }
+                    if (p2 != 0L) {
+                        p2 = prog2.execute()
+                    }
                     prog1.waitingQueue.addAll(prog2.sendingQueue)
                     prog2.sendingQueue.clear()
 

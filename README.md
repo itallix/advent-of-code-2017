@@ -21,4 +21,7 @@ Solutions in Kotlin for Advent of Code 2017
 * [Day 16: Permutation Promenade](http://adventofcode.com/2017/day/16)
 * [Day 17: Spinlock](http://adventofcode.com/2017/day/17)
 * [Day 18: Duet](http://adventofcode.com/2017/day/18)
+* [Day 19: A Series of Tubes](http://adventofcode.com/2017/day/19)
+* [Day 20: A Series of Tubes](http://adventofcode.com/2017/day/20)
+* [Day 21: A Series of Tubes](http://adventofcode.com/2017/day/21)
 
