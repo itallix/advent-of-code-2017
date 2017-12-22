@@ -24,4 +24,4 @@ Solutions in Kotlin for Advent of Code 2017
 * [Day 19: A Series of Tubes](http://adventofcode.com/2017/day/19)
 * [Day 20: Particle Swarm](http://adventofcode.com/2017/day/20)
 * [Day 21: Fractal Art](http://adventofcode.com/2017/day/21)
-
+* [Day 22: Sporifica Virus](http://adventofcode.com/2017/day/22)
